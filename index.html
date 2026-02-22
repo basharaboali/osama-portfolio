@@ -11,7 +11,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Almarai', sans-serif; overflow-x: hidden; }
 
-        /* الضوء المتحرك في الخلفية */
         .glow-bg {
             position: fixed; top: 50%; left: 50%; width: 600px; height: 600px;
             background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, rgba(0,0,0,0) 70%);
@@ -20,38 +19,41 @@
         }
         @keyframes moveGlow { 0% { transform: translate(-20%, -20%); } 100% { transform: translate(-60%, -60%); } }
 
-        /* التنسيق العلوي */
         header { height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 10%; position: relative; }
-        .controls { position: absolute; top: 40px; left: 50px; display: flex; gap: 20px; align-items: center; }
+        
+        /* تعديل المسافات للموبايل لضمان عدم تداخل الأزرار */
+        .controls { position: absolute; top: 40px; left: 20px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
         
         .btn-action { 
             background: none; border: 1px solid var(--gold); color: var(--gold); 
-            width: 45px; height: 45px; border-radius: 50%; display: flex; 
-            justify-content: center; align-items: center; cursor: pointer; transition: 0.3s;
+            width: 40px; height: 40px; border-radius: 50%; display: flex; 
+            justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; text-decoration: none;
         }
         .btn-action:hover { background: var(--gold); color: #000; }
 
         .whatsapp-link {
-            background: var(--gold); color: #000; padding: 12px 25px; 
+            background: var(--gold); color: #000; padding: 10px 20px; 
             border-radius: 30px; text-decoration: none; font-weight: 800; 
-            font-size: 0.9rem; transition: 0.3s; display: flex; align-items: center; gap: 10px;
+            font-size: 0.8rem; transition: 0.3s; display: flex; align-items: center; gap: 8px;
         }
-        .whatsapp-link:hover { transform: scale(1.05); box-shadow: 0 0 20px rgba(212,175,55,0.4); }
+        .whatsapp-link:hover { transform: scale(1.05); }
 
-        /* النصوص */
         header h1 { font-size: clamp(3.5rem, 12vw, 9rem); font-weight: 800; line-height: 0.85; margin: 0; }
         header h1 span { display: block; color: transparent; -webkit-text-stroke: 1px var(--gold); }
         .subtitle { font-size: 1.2rem; color: var(--gold); margin-bottom: 15px; letter-spacing: 4px; opacity: 0.8; }
 
-        /* قسم الأعمال */
+        /* تأثير الظهور الناعم */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
         .section-title { padding: 80px 10% 40px; font-size: 2.5rem; border-bottom: 1px solid rgba(212,175,55,0.1); }
         .work-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; padding: 50px 10%; }
         .work-item { 
             aspect-ratio: 16/9; background: #111; position: relative; 
             overflow: hidden; border-radius: 15px; cursor: pointer;
         }
-        .work-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; transition: 0.7s; }
-        .work-item:hover img { opacity: 0.8; transform: scale(1.1); }
+        .work-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.7s; }
+        .work-item:hover img { opacity: 1; transform: scale(1.05); }
         .work-label { position: absolute; bottom: 20px; right: 25px; font-weight: 700; font-size: 1.2rem; text-shadow: 0 2px 10px #000; }
 
         footer { padding: 60px 10%; text-align: center; opacity: 0.3; font-size: 0.8rem; border-top: 1px solid rgba(212,175,55,0.1); }
@@ -63,18 +65,12 @@
     <div style="display:none"><div id="yt-player"></div></div>
 
     <header>
-      <div class="controls">
-    <button class="btn-action" onclick="toggleMusic()"><i class="fas fa-play" id="music-icon"></i></button>
-    
-    <a href="https://www.facebook.com/share/17yrLXuYnG/" class="btn-action" target="_blank">
-        <i class="fab fa-facebook-f"></i>
-    </a>
-
-    <a href="https://wa.me/9639xxxxxxxx" class="whatsapp-link" target="_blank">
-        تواصل معي
-    </a>
-</div>
-
+        <div class="controls">
+            <button class="btn-action" onclick="toggleMusic()"><i class="fas fa-play" id="music-icon"></i></button>
+            <a href="https://www.facebook.com/share/17yrLXuYnG/" class="btn-action" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/9639xxxxxxxx" class="whatsapp-link" target="_blank">تواصل معي</a>
+        </div>
+        
         <p class="subtitle">المخرج الإبداعي</p>
         <h1>أُسامة<span>أبو أحمد</span></h1>
         <p style="max-width: 550px; margin-top: 35px; line-height: 1.8; opacity: 0.6; font-size: 1.1rem;">
@@ -82,14 +78,14 @@
         </p>
     </header>
 
-    <div class="section-title">الأعمال الإبداعية</div>
+    <div class="section-title reveal">الأعمال الإبداعية</div>
     <div class="work-grid">
-        <div class="work-item">
-            <img src="https://i.postimg.cc/P5Cn4tF0/Screenshot-20260222-172122-Facebook.jpg" alt="">
-            <div class="work-label">أبو أحمد </div>
+        <div class="work-item reveal">
+            <img src="https://i.postimg.cc/P5Cn4tF0/Screenshot-20260222-172122-Facebook.jpg" alt="أبو أحمد">
+            <div class="work-label">أبو أحمد</div>
         </div>
-        <div class="work-item">
-            <img src="https://i.postimg.cc/pT20sCLR/images-(1).jpg" alt="">
+        <div class="work-item reveal">
+            <img src="https://i.postimg.cc/pT20sCLR/images-(1).jpg" alt="مصمم ومبرمج">
             <div class="work-label">مصمم ومبرمج سوري</div>
         </div>
     </div>
@@ -107,6 +103,18 @@
             if(!isPlaying) { player.playVideo(); icon.className = "fas fa-pause"; isPlaying = true; }
             else { player.pauseVideo(); icon.className = "fas fa-play"; isPlaying = false; }
         }
+
+        // كود تحريك العناصر عند التمرير
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) { reveals[i].classList.add("active"); }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", reveal);
     </script>
 </body>
 </html>
